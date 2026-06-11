@@ -1,0 +1,33 @@
+# ============================================================
+# NeutralSpace — Local Development Setup
+# neutralspace.xyz
+#
+# Run locally with: docker-compose up
+# Backend will be available at http://localhost:8080
+# Test searches at http://localhost:8080/search?q=test&format=json
+# ============================================================
+
+version: '3.8'
+
+services:
+  neutralspace-backend:
+    build: .
+    container_name: neutralspace-backend
+    ports:
+      - "8080:8080"
+    environment:
+      # Change this for local dev — use a real random string in production
+      - SEARXNG_SECRET_KEY=local-dev-key-change-before-production
+      - SEARXNG_REDIS_URL=
+      - SEARXNG_SETTINGS_PATH=/etc/searxng/settings.yml
+      - SEARXNG_BIND_ADDRESS=0.0.0.0:8080
+    volumes:
+      # Mount settings.yml so you can edit without rebuilding
+      - ./settings.yml:/etc/searxng/settings.yml:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s

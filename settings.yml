@@ -1,0 +1,307 @@
+# ============================================================
+# NeutralSpace — SearXNG Backend Configuration
+# neutralspace.xyz
+#
+# Philosophy: No personalization. No location bias.
+# No tracking. Same results for everyone.
+# ============================================================
+
+use_default_settings: true
+
+# ------------------------------------------------------------
+# General settings
+# ------------------------------------------------------------
+general:
+  instance_name: "NeutralSpace"
+  privacypolicy_url: "https://neutralspace.xyz/privacy.html"
+  donation_url: "https://buymeacoffee.com/neutralspace"
+  contact_url: false
+  enable_metrics: false
+
+# ------------------------------------------------------------
+# Search — all personalization disabled
+# ------------------------------------------------------------
+search:
+  # No autocomplete — prevents query leakage to third parties
+  autocomplete: ""
+  autocomplete_min: 0
+
+  # Safe search off by default — user controls via toggle
+  safe_search: 0
+
+  # Force English results globally — no location inference
+  default_lang: "en"
+  languages:
+    - "en"
+
+  # Ban list — block known AI content farms and low quality
+  # aggregator domains from appearing in results
+  ban_url_now: false
+
+  # No time range default — user controls via Time Machine
+  time_range: ""
+
+  # Max pages per query
+  max_page: 5
+
+  # Formats — JSON enabled for frontend API calls
+  formats:
+    - html
+    - json
+
+# ------------------------------------------------------------
+# Server
+# ------------------------------------------------------------
+server:
+  # Secret key — MUST be overridden via environment variable
+  # SEARXNG_SECRET_KEY in Railway dashboard
+  secret_key: "${SEARXNG_SECRET_KEY}"
+
+  # No rate limiting — we trust our users
+  limiter: false
+
+  # Not a public instance — prevents listing on SearXNG directory
+  public_instance: false
+
+  # Image proxy — serve images through our backend
+  # prevents user IPs leaking to image CDNs
+  image_proxy: true
+
+  # CORS — allow frontend on neutralspace.xyz to call this API
+  # Also allows localhost for development
+  cors:
+    allow_origins:
+      - "https://neutralspace.xyz"
+      - "https://www.neutralspace.xyz"
+      - "http://localhost:3000"
+      - "http://localhost:5500"
+      - "http://127.0.0.1:5500"
+    allow_methods:
+      - "GET"
+      - "OPTIONS"
+    allow_headers:
+      - "Accept"
+      - "Content-Type"
+
+# ------------------------------------------------------------
+# Outgoing requests — rotate user agents for neutrality
+# Prevents search engines fingerprinting our instance
+# ------------------------------------------------------------
+outgoing:
+  request_timeout: 6.0
+  max_request_timeout: 10.0
+
+  # Rotate through common browser user agents
+  # so no single fingerprint is associated with our instance
+  useragents:
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+    - "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"
+    - "Mozilla/5.0 (Macintosh; Intel Mac OS X 14.3; rv:123.0) Gecko/20100101 Firefox/123.0"
+
+  # No proxies — direct connections for speed on free tier
+  proxies: {}
+
+# ------------------------------------------------------------
+# Redis — disabled (no session storage, no tracking)
+# ------------------------------------------------------------
+redis:
+  url: false
+
+# ------------------------------------------------------------
+# UI — minimal, no unnecessary features
+# ------------------------------------------------------------
+ui:
+  static_use_hash: true
+  default_theme: simple
+  theme_args:
+    simple_style: dark
+  infinite_scroll: false
+  query_in_title: true
+  results_on_new_tab: false
+  search_on_category_select: false
+  hotkeys: default
+
+# ------------------------------------------------------------
+# Cache — disabled (no result caching, always fresh)
+# ------------------------------------------------------------
+cache:
+  type: null
+
+# ------------------------------------------------------------
+# Engines — curated for neutrality and source diversity
+#
+# Philosophy:
+# - Multiple independent engines = no single point of bias
+# - Social media disabled = no engagement-optimized content
+# - AI content farms disabled where possible
+# - Wikipedia and academic sources enabled
+# ------------------------------------------------------------
+engines:
+
+  # --- Web search engines (general) ---
+
+  - name: google
+    engine: google
+    categories: general
+    disabled: false
+    safesearch: false
+    time_range_support: true
+    weight: 1
+
+  - name: bing
+    engine: bing
+    categories: general
+    disabled: false
+    safesearch: false
+    time_range_support: true
+    weight: 1
+
+  - name: brave
+    engine: brave
+    categories: general
+    disabled: false
+    safesearch: false
+    time_range_support: true
+    weight: 1
+
+  - name: duckduckgo
+    engine: duckduckgo
+    categories: general
+    disabled: false
+    safesearch: false
+    time_range_support: true
+    weight: 1
+
+  - name: qwant
+    engine: qwant
+    categories: general
+    disabled: false
+    safesearch: false
+    time_range_support: false
+    weight: 1
+
+  - name: startpage
+    engine: startpage
+    categories: general
+    disabled: false
+    safesearch: false
+    time_range_support: true
+    weight: 1
+
+  - name: mojeek
+    engine: mojeek
+    categories: general
+    disabled: false
+    time_range_support: false
+    weight: 1
+
+  # --- Knowledge and reference ---
+
+  - name: wikipedia
+    engine: wikipedia
+    categories: general
+    disabled: false
+    weight: 1
+
+  - name: wikidata
+    engine: wikidata
+    categories: general
+    disabled: false
+    weight: 0.5
+
+  # --- Image search ---
+
+  - name: google images
+    engine: google_images
+    categories: images
+    disabled: false
+    safesearch: false
+
+  - name: bing images
+    engine: bing_images
+    categories: images
+    disabled: false
+    safesearch: false
+
+  - name: brave images
+    engine: brave_images
+    categories: images
+    disabled: false
+    safesearch: false
+
+  - name: duckduckgo images
+    engine: duckduckgo_images
+    categories: images
+    disabled: false
+    safesearch: false
+
+  # --- News search ---
+
+  - name: google news
+    engine: google_news
+    categories: news
+    disabled: false
+
+  - name: bing news
+    engine: bing_news
+    categories: news
+    disabled: false
+
+  - name: brave news
+    engine: brave_news
+    categories: news
+    disabled: false
+
+  - name: duckduckgo news
+    engine: duckduckgo_news
+    categories: news
+    disabled: false
+
+  # --- Academic and original sources ---
+
+  - name: arxiv
+    engine: arxiv
+    categories: science
+    disabled: false
+    weight: 1
+
+  - name: pubmed
+    engine: pubmed
+    categories: science
+    disabled: false
+    weight: 1
+
+  - name: semantic scholar
+    engine: semantic_scholar
+    categories: science
+    disabled: false
+    weight: 1
+
+  # --- Social / engagement-driven — DISABLED ---
+  # These surfaces are optimised for engagement not truth.
+  # Keeping them off by default aligns with our mission.
+
+  - name: reddit
+    engine: reddit
+    disabled: true
+
+  - name: twitter
+    engine: twitter
+    disabled: true
+
+  - name: youtube
+    engine: youtube_noapi
+    disabled: true
+
+  - name: tiktok
+    disabled: true
+
+  # --- Known AI content farms — DISABLED ---
+
+  - name: dailymotion
+    disabled: true
+
+  - name: genius
+    disabled: true
