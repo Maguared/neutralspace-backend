@@ -1,24 +1,17 @@
 # ============================================================
 # NeutralSpace — Backend Dockerfile
 # neutralspace.xyz
-#
-# Uses nginx as a reverse proxy in front of SearXNG
-# to handle CORS headers properly
 # ============================================================
 
 FROM searxng/searxng:latest
 
-# Install nginx
+# Install nginx using apt-get (Debian-based image)
 USER root
-RUN apk add --no-cache nginx
+RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
 
-# Copy our custom neutral configuration
+# Copy configurations
 COPY settings.yml /etc/searxng/settings.yml
-
-# Copy nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
-
-# Startup script — runs both nginx and searxng
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
