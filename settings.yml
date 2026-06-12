@@ -165,7 +165,7 @@ engines:
     disabled: false
     safesearch: false
     time_range_support: true
-    weight: 1
+    weight: 1.3
 
   - name: duckduckgo
     engine: duckduckgo
@@ -196,7 +196,13 @@ engines:
     categories: general
     disabled: false
     time_range_support: false
-    weight: 1
+    weight: 1.5
+    
+  - name: marginalia
+    engine: marginalia
+    categories: general
+    disabled: false
+    weight: 1.2
 
   # --- Knowledge and reference ---
 
