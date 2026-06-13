@@ -149,7 +149,7 @@ engines:
     disabled: false
     safesearch: false
     time_range_support: true
-    weight: 1
+    weight: 1.4
 
   - name: bing
     engine: bing
@@ -157,7 +157,7 @@ engines:
     disabled: false
     safesearch: false
     time_range_support: true
-    weight: 1
+    weight: 1.2
 
   - name: brave
     engine: brave
@@ -165,7 +165,7 @@ engines:
     disabled: false
     safesearch: false
     time_range_support: true
-    weight: 1.3
+    weight: 1
 
   - name: duckduckgo
     engine: duckduckgo
@@ -181,7 +181,7 @@ engines:
     disabled: false
     safesearch: false
     time_range_support: false
-    weight: 1
+    weight: 0.8
 
   - name: startpage
     engine: startpage
@@ -189,20 +189,20 @@ engines:
     disabled: false
     safesearch: false
     time_range_support: true
-    weight: 1
+    weight: 1.2
 
   - name: mojeek
     engine: mojeek
     categories: general
     disabled: false
     time_range_support: false
-    weight: 1.5
+    weight: 0.8
     
   - name: marginalia
     engine: marginalia
     categories: general
     disabled: false
-    weight: 1.2
+    weight: 0.5
 
   # --- Knowledge and reference ---
 
