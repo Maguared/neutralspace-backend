@@ -147,7 +147,7 @@ engines:
     engine: google
     categories: general
     disabled: false
-    safesearch: false
+    safesearch: true
     time_range_support: true
     weight: 1.4
 
@@ -155,7 +155,7 @@ engines:
     engine: bing
     categories: general
     disabled: false
-    safesearch: false
+    safesearch: true
     time_range_support: true
     weight: 1.2
 
@@ -163,7 +163,7 @@ engines:
     engine: brave
     categories: general
     disabled: false
-    safesearch: false
+    safesearch: true
     time_range_support: true
     weight: 1
 
@@ -171,7 +171,7 @@ engines:
     engine: duckduckgo
     categories: general
     disabled: false
-    safesearch: false
+    safesearch: true
     time_range_support: true
     weight: 1
 
