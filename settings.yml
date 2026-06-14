@@ -224,25 +224,25 @@ engines:
     engine: google_images
     categories: images
     disabled: false
-    safesearch: false
+    safesearch: 2
 
   - name: bing images
     engine: bing_images
     categories: images
     disabled: false
-    safesearch: false
+    safesearch: 2
 
   - name: brave images
     engine: brave_images
     categories: images
     disabled: false
-    safesearch: false
+    safesearch: 2
 
   - name: duckduckgo images
     engine: duckduckgo_images
     categories: images
     disabled: false
-    safesearch: false
+    safesearch: 2
 
   # --- News search ---
 
