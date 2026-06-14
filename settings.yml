@@ -250,16 +250,19 @@ engines:
     engine: google_news
     categories: news
     disabled: false
+    weight: 2.0
 
   - name: bing news
     engine: bing_news
     categories: news
     disabled: false
+    weight: 2.0
 
   - name: brave news
     engine: brave_news
     categories: news
     disabled: false
+    weight: 1.5
 
   - name: duckduckgo news
     engine: duckduckgo_news
