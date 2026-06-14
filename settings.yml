@@ -149,7 +149,7 @@ engines:
     disabled: false
     safesearch: true
     time_range_support: true
-    weight: 1.4
+    weight: 1.8
 
   - name: bing
     engine: bing
@@ -157,7 +157,7 @@ engines:
     disabled: false
     safesearch: true
     time_range_support: true
-    weight: 1.2
+    weight: 1.6
 
   - name: brave
     engine: brave
@@ -189,7 +189,7 @@ engines:
     disabled: false
     safesearch: false
     time_range_support: true
-    weight: 1.2
+    weight: 1.4
 
   - name: mojeek
     engine: mojeek
