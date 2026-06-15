@@ -256,7 +256,7 @@ engines:
     engine: bing_news
     categories: news
     disabled: false
-    weight: 2.0
+    weight: 1.0
 
   - name: brave news
     engine: brave_news
