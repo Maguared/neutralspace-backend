@@ -193,20 +193,17 @@ engines:
   - name: bing images
     engine: bing_images
     categories: images
-    disabled: false
-    safesearch: 2
+    disabled: true
 
   - name: brave images
     engine: brave_images
     categories: images
-    disabled: false
-    safesearch: 2
+    disabled: true
 
   - name: duckduckgo images
     engine: duckduckgo_images
     categories: images
-    disabled: false
-    safesearch: 2
+    disabled: true
 
   # --- News ---
   # Only engines confirmed to exist in this SearXNG version.
