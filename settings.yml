@@ -124,7 +124,7 @@ engines:
     disabled: false
     safesearch: true
     time_range_support: true
-    weight: 1.6
+    weight: 0.8
 
   - name: brave
     engine: brave
