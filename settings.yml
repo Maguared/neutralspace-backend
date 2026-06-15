@@ -1,6 +1,6 @@
 # ============================================================
 # NeutralSpace — SearXNG Backend Configuration
-# neutralspace.xyz
+# myneutralspace.com
 #
 # Philosophy: No personalization. No location bias.
 # No tracking. Same results for everyone.
@@ -22,29 +22,15 @@ general:
 # Search — all personalization disabled
 # ------------------------------------------------------------
 search:
-  # No autocomplete — prevents query leakage to third parties
   autocomplete: ""
   autocomplete_min: 0
-
-  # Safe search off by default — user controls via toggle
   safe_search: 0
-
-  # Force English results globally — no location inference
   default_lang: "en"
   languages:
     - "en"
-
-  # Ban list — block known AI content farms and low quality
-  # aggregator domains from appearing in results
   ban_url_now: false
-
-  # No time range default — user controls via Time Machine
   time_range: ""
-
-  # Max pages per query
   max_page: 5
-
-  # Formats — JSON enabled for frontend API calls
   formats:
     - html
     - json
@@ -53,21 +39,10 @@ search:
 # Server
 # ------------------------------------------------------------
 server:
-  # Secret key — MUST be overridden via environment variable
-  # SEARXNG_SECRET_KEY in Railway dashboard
   secret_key: "${SEARXNG_SECRET_KEY}"
-
-  # No rate limiting — we trust our users
   limiter: false
-
-  # Not a public instance — prevents listing on SearXNG directory
   public_instance: false
-
-  # Image proxy — serve images through our backend
-  # prevents user IPs leaking to image CDNs
   image_proxy: true
-
-  # CORS — allow frontend domains to call this API
   cors:
     allow_origins:
       - "https://myneutralspace.com"
@@ -86,33 +61,27 @@ server:
       - "Content-Type"
 
 # ------------------------------------------------------------
-# Outgoing requests — increased timeouts to allow more
-# news engines to respond before SearXNG gives up
+# Outgoing requests
 # ------------------------------------------------------------
 outgoing:
-  request_timeout: 8.0        # increased from 6.0
-  max_request_timeout: 14.0   # increased from 10.0
-
-  # Rotate through common browser user agents
-  # so no single fingerprint is associated with our instance
+  request_timeout: 8.0
+  max_request_timeout: 14.0
   useragents:
     - "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
     - "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
     - "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
     - "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"
     - "Mozilla/5.0 (Macintosh; Intel Mac OS X 14.3; rv:123.0) Gecko/20100101 Firefox/123.0"
-
-  # No proxies — direct connections for speed on free tier
   proxies: {}
 
 # ------------------------------------------------------------
-# Redis — disabled (no session storage, no tracking)
+# Redis — disabled
 # ------------------------------------------------------------
 redis:
   url: false
 
 # ------------------------------------------------------------
-# UI — minimal, no unnecessary features
+# UI
 # ------------------------------------------------------------
 ui:
   static_use_hash: true
@@ -126,23 +95,20 @@ ui:
   hotkeys: default
 
 # ------------------------------------------------------------
-# Cache — disabled (no result caching, always fresh)
+# Cache — disabled
 # ------------------------------------------------------------
 cache:
   type: null
 
 # ------------------------------------------------------------
-# Engines — curated for neutrality and source diversity
-#
-# Philosophy:
-# - Multiple independent engines = no single point of bias
-# - Social media disabled = no engagement-optimized content
-# - AI content farms disabled where possible
-# - Wikipedia and academic sources enabled
+# Engines
+# NOTE: brave_news, duckduckgo_news, qwant_news removed —
+# engine files do not exist in this SearXNG version.
+# twitter and tiktok removed — same reason.
 # ------------------------------------------------------------
 engines:
 
-  # --- Web search engines (general) ---
+  # --- Web search ---
 
   - name: google
     engine: google
@@ -205,7 +171,7 @@ engines:
     disabled: false
     weight: 0.5
 
-  # --- Knowledge and reference ---
+  # --- Knowledge ---
 
   - name: wikipedia
     engine: wikipedia
@@ -219,7 +185,7 @@ engines:
     disabled: false
     weight: 0.5
 
-  # --- Image search ---
+  # --- Images ---
 
   - name: google images
     engine: google_images
@@ -245,17 +211,16 @@ engines:
     disabled: false
     safesearch: 2
 
-  # --- News search ---
-  # Bing News weight reduced from 2.0 to 1.0 — quality too
-  # inconsistent to dominate results on its own.
-  # Qwant News added as 5th independent source.
-  # Higher timeouts above give all engines time to respond.
+  # --- News ---
+  # Only engines confirmed to exist in this SearXNG version.
+  # Google News weighted highest — best relevance.
+  # Bing News weight kept low due to quality issues.
 
   - name: google news
     engine: google_news
     categories: news
     disabled: false
-    weight: 2.0
+    weight: 2.5
 
   - name: bing news
     engine: bing_news
@@ -263,25 +228,7 @@ engines:
     disabled: false
     weight: 1.0
 
-  - name: brave news
-    engine: brave_news
-    categories: news
-    disabled: false
-    weight: 1.5
-
-  - name: duckduckgo news
-    engine: duckduckgo_news
-    categories: news
-    disabled: false
-    weight: 1.5
-
-  - name: qwant news
-    engine: qwant_news
-    categories: news
-    disabled: false
-    weight: 1.5
-
-  # --- Academic and original sources ---
+  # --- Academic ---
 
   - name: arxiv
     engine: arxiv
@@ -301,26 +248,15 @@ engines:
     disabled: false
     weight: 1
 
-  # --- Social / engagement-driven — DISABLED ---
-  # These surfaces are optimised for engagement not truth.
-  # Keeping them off by default aligns with our mission.
+  # --- Disabled ---
 
   - name: reddit
     engine: reddit
     disabled: true
 
-  - name: twitter
-    engine: twitter
-    disabled: true
-
   - name: youtube
     engine: youtube_noapi
     disabled: true
-
-  - name: tiktok
-    disabled: true
-
-  # --- Known AI content farms — DISABLED ---
 
   - name: dailymotion
     disabled: true
