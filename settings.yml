@@ -89,8 +89,8 @@ server:
 # Prevents search engines fingerprinting our instance
 # ------------------------------------------------------------
 outgoing:
-  request_timeout: 6.0
-  max_request_timeout: 10.0
+  request_timeout: 8.0
+  max_request_timeout: 14.0
 
   # Rotate through common browser user agents
   # so no single fingerprint is associated with our instance
@@ -270,6 +270,12 @@ engines:
     disabled: false
     weight: 1.5
 
+  - name: qwant news
+    engine: qwant_news
+    categories: news
+    disabled: false
+    weight: 1.5
+    
   # --- Academic and original sources ---
 
   - name: arxiv
