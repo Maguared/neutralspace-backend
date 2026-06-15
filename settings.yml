@@ -137,10 +137,7 @@ engines:
   - name: duckduckgo
     engine: duckduckgo
     categories: general
-    disabled: false
-    safesearch: true
-    time_range_support: true
-    weight: 1
+    disabled: true
 
   - name: qwant
     engine: qwant
