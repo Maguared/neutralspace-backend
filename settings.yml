@@ -13,7 +13,7 @@ use_default_settings: true
 # ------------------------------------------------------------
 general:
   instance_name: "NeutralSpace"
-  privacypolicy_url: "https://neutralspace.xyz/privacy.html"
+  privacypolicy_url: "https://myneutralspace.com/privacy.html"
   donation_url: "https://buymeacoffee.com/neutralspace"
   contact_url: false
   enable_metrics: false
@@ -67,10 +67,11 @@ server:
   # prevents user IPs leaking to image CDNs
   image_proxy: true
 
-  # CORS — allow frontend on neutralspace.xyz to call this API
-  # Also allows localhost for development
+  # CORS — allow frontend domains to call this API
   cors:
     allow_origins:
+      - "https://myneutralspace.com"
+      - "https://www.myneutralspace.com"
       - "https://neutralspace.xyz"
       - "https://www.neutralspace.xyz"
       - "https://neutralspace-backend-production.up.railway.app"
@@ -85,12 +86,12 @@ server:
       - "Content-Type"
 
 # ------------------------------------------------------------
-# Outgoing requests — rotate user agents for neutrality
-# Prevents search engines fingerprinting our instance
+# Outgoing requests — increased timeouts to allow more
+# news engines to respond before SearXNG gives up
 # ------------------------------------------------------------
 outgoing:
-  request_timeout: 8.0
-  max_request_timeout: 14.0
+  request_timeout: 8.0        # increased from 6.0
+  max_request_timeout: 14.0   # increased from 10.0
 
   # Rotate through common browser user agents
   # so no single fingerprint is associated with our instance
@@ -197,7 +198,7 @@ engines:
     disabled: false
     time_range_support: false
     weight: 0.8
-    
+
   - name: marginalia
     engine: marginalia
     categories: general
@@ -245,6 +246,10 @@ engines:
     safesearch: 2
 
   # --- News search ---
+  # Bing News weight reduced from 2.0 to 1.0 — quality too
+  # inconsistent to dominate results on its own.
+  # Qwant News added as 5th independent source.
+  # Higher timeouts above give all engines time to respond.
 
   - name: google news
     engine: google_news
@@ -275,7 +280,7 @@ engines:
     categories: news
     disabled: false
     weight: 1.5
-    
+
   # --- Academic and original sources ---
 
   - name: arxiv
@@ -322,4 +327,3 @@ engines:
 
   - name: genius
     disabled: true
-
