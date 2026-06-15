@@ -1,8 +1,8 @@
 # ============================================================
 # NeutralSpace — Backend Dockerfile
-# neutralspace.xyz
+# myneutralspace.com
+# Updated: 2026-06-15
 # ============================================================
-
 FROM searxng/searxng:latest
 
 # Copy our custom neutral configuration
@@ -21,5 +21,4 @@ HEALTHCHECK \
   CMD wget -q --spider http://localhost:8080/healthz || exit 1
 
 EXPOSE 8080
-
 CMD ["searxng-run"]
